@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-microservice
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: java-microservice
+          image: java-microservice:latest # You can change the image tag if required for local which is helpful
+
+
+

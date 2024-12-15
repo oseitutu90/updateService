@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: random-data-config
+data:
+  random.key1: "randomValue1"
+  random.key2: "randomValue2"
+  random.key3: "randomValue3"

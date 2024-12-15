@@ -1,0 +1,86 @@
+{
+  "type": "record",
+  "name": "UserUpdate",
+  "namespace": "com.amoabin.updateservice.entity.avro",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": "long"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "surname",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "transactionId",
+      "type": "string"
+    },
+    {
+      "name": "indicators",
+      "type": "string"
+    },
+    {
+      "name": "uniqueId",
+      "type": "string"
+    },
+    {
+      "name": "createdAt",
+      "type": "long"
+    },
+    {
+      "name": "updatedAt",
+      "type": "long"
+    }
+  ]
+}{
+  "type": "record",
+  "name": "UserEntity",
+  "namespace": "com.amoabin.updateservice.entity.avro",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": "long"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "surname",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "transactionId",
+      "type": "string"
+    },
+    {
+      "name": "indicators",
+      "type": "string"
+    },
+    {
+      "name": "uniqueId",
+      "type": "string"
+    },
+    {
+      "name": "createdAt",
+      "type": "long"
+    },
+    {
+      "name": "updatedAt",
+      "type": "long"
+    }
+  ]
+}
+

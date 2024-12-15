@@ -8,8 +8,8 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-                sh 'docker tag update-service:latest <your-registry>/update-service:latest'
-                sh 'docker push <your-registry>/update-service:latest'
+                sh 'docker tag update-service:latest 192.168.1.18:32000/update-service:latest'
+                sh 'docker push 192.168.1.18:32000/update-service:latest'
             }
         }
         stage('Deploy') {

@@ -1,21 +1,45 @@
 pipeline {
     agent any
+
+    environment {
+        KUBE_CONFIG = credentials('kubeconfig') // Jenkins credential for kubeconfig
+    }
+
     stages {
-        stage('Build') {
+        stage('Clone Repository') {
             steps {
-               sh 'docker --host=tcp://localhost:2375 build -t update-service:latest .'
+                git 'https://github.com/oseitutu90/updateService.git'
             }
         }
-        stage('Push Image') {
+
+        stage('Trigger Kaniko Build') {
             steps {
-                sh 'docker tag update-service:latest 192.168.1.18:32000/update-service:latest'
-                sh 'docker push 192.168.1.18:32000/update-service:latest'
+                script {
+                    // Apply the Kaniko Job YAML
+                    sh """
+                        kubectl --kubeconfig=$KUBE_CONFIG apply -f kaniko-build-job.yaml
+                    """
+
+                    // Wait for the Kaniko Job to complete
+                    sh """
+                        kubectl --kubeconfig=$KUBE_CONFIG wait --for=condition=complete --timeout=300s job/kaniko-build -n dev
+                    """
+
+                    // Check logs of Kaniko Job (Optional)
+                    sh """
+                        kubectl --kubeconfig=$KUBE_CONFIG logs job/kaniko-build -n dev
+                    """
+                }
             }
         }
-        stage('Deploy') {
-            steps {
-                sh 'kubectl apply -k k8s/overlays/local'
-            }
+    }
+
+    post {
+        success {
+            echo 'Build and push completed successfully!'
+        }
+        failure {
+            echo 'Build or push failed!'
         }
     }
 }

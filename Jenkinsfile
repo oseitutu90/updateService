@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        KUBE_CONFIG = credentials('kubeconfig') // Reference the kubeconfig credential
-    }
-
     stages {
         stage('Clone Repository') {
             steps {
@@ -15,20 +11,23 @@ pipeline {
         stage('Trigger Kaniko Build') {
             steps {
                 script {
-                    // Apply the Kaniko Job YAML
-                    sh """
-                        kubectl --kubeconfig=$KUBE_CONFIG apply -f kaniko-build-job.yaml
-                    """
+                    // Use withCredentials to bind the kubeconfig file
+                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        // Apply the Kaniko Job YAML
+                        sh """
+                            kubectl --kubeconfig=$KUBECONFIG apply -f kaniko-build-job.yaml
+                        """
 
-                    // Wait for the Kaniko Job to complete
-                    sh """
-                        kubectl --kubeconfig=$KUBE_CONFIG wait --for=condition=complete --timeout=300s job/kaniko-build -n dev
-                    """
+                        // Wait for the Kaniko Job to complete
+                        sh """
+                            kubectl --kubeconfig=$KUBECONFIG wait --for=condition=complete --timeout=300s job/kaniko-build -n dev
+                        """
 
-                    // Check logs of Kaniko Job (Optional)
-                    sh """
-                        kubectl --kubeconfig=$KUBE_CONFIG logs job/kaniko-build -n dev
-                    """
+                        // Check logs of Kaniko Job (Optional)
+                        sh """
+                            kubectl --kubeconfig=$KUBECONFIG logs job/kaniko-build -n dev
+                        """
+                    }
                 }
             }
         }

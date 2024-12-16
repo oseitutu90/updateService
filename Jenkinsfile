@@ -1,12 +1,21 @@
 pipeline {
     agent any
 
+
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/oseitutu90/updateService.git'
+                script {
+                    // Print debugging info
+                    echo "Cloning repository..."
+                    sh 'git --version' // Check Git version in the pipeline environment
+                    sh 'git ls-remote https://github.com/oseitutu90/updateService.git' // Verify access to the repo
+                }
+                // Perform Git clone
+                git branch: 'main', url: 'https://github.com/oseitutu90/updateService.git'
             }
         }
+    }
 
         stage('Trigger Kaniko Build') {
             steps {

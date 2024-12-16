@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t update-service:latest .'
+               sh 'docker --host=tcp://localhost:2375 build -t update-service:latest .'
             }
         }
         stage('Push Image') {

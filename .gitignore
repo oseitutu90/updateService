@@ -4,11 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-###K8s
-k8s/
-
-Jenkinsfile
-
 ### STS ###
 .apt_generated
 .classpath
@@ -36,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+k8s/

@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-microservice
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: java-microservice
+          env:
+            - name: SPRING_PROFILE_ACTIVE
+              value: staging

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: java-microservice
+  namespace: dev # Namespace explicitly declared for clarity
 spec:
   replicas: 1
   selector:
@@ -12,8 +13,12 @@ spec:
       labels:
         app: java-microservice
     spec:
+      serviceAccountName: java-microservice-sa # ServiceAccount explicitly set at the spec level
       containers:
-        - env:
+        - name: java-microservice
+          image: 192.168.1.18:32000/update-service:latest
+          imagePullPolicy: IfNotPresent
+          env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres:5432/mydatabase
             - name: SPRING_DATASOURCE_USERNAME
@@ -22,9 +27,9 @@ spec:
               value: mypassword
             - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
               value: kafka:9092
-          image: 192.168.1.18:32000/update-service:latest
-          imagePullPolicy: IfNotPresent
-          name: java-microservice
+            # Optional: Default profile for flexibility
+            - name: SPRING_PROFILE_ACTIVE
+              value: default
           ports:
             - containerPort: 8083
-      serviceAccountName: java-microservice-sa
+              protocol: TCP

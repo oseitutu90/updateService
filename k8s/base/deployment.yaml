@@ -22,7 +22,7 @@ spec:
               value: mypassword
             - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
               value: kafka:9092
-          image: java-microservice:local
+          image: localhost:32000/java-microservice:local
           imagePullPolicy: IfNotPresent
           name: java-microservice
           ports:

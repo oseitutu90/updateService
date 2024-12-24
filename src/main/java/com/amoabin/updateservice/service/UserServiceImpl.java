@@ -19,11 +19,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final ConfigMapWatcherService configMapWatcherService;
+//    private final ConfigMapWatcherService configMapWatcherService;
 
     @Override
     public UserEntity createUser(UserEntity userEntity) {
-        configMapWatcherService.startWatching();
+//        configMapWatcherService.startWatching();
         return userRepository.save(userEntity);
     }
 

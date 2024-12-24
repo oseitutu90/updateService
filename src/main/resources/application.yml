@@ -21,10 +21,12 @@ spring:
   sql:
     init:
       schema-locations: classpath:user_management
-
+  flyway:
+    enabled: false
 logging:
   level:
     org:
+      springframework: DEBUG
       hibernate:
         SQL: DEBUG
         type: TRACE
@@ -33,6 +35,7 @@ logging:
             BasicBinder: TRACE
     com.amoabin.updateservice: DEBUG
     org.springframework.transaction: DEBUG
+    com.zaxxer.hikari: DEBUG
 
 kubernetes:
   namespace: default
